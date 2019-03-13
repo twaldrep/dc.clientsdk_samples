@@ -1,4 +1,4 @@
-package com.actian.dc.clientsdk;
+package com.actian.dc.clientsdk.samples;
 
 import com.pervasive.di.client.sdk.JobListener;
 import com.pervasive.di.client.sdk.JobProgress;

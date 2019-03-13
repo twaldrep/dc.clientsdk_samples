@@ -1,4 +1,4 @@
-package com.actian.dc.clientsdk;
+package com.actian.dc.clientsdk.samples;
 
 import com.pervasive.di.client.sdk.SDKException;
 import com.pervasive.di.client.sdk.Task;
@@ -13,7 +13,7 @@ public class SamplesRunner
 {
     private static final Logger logger = LogUtil.getLogger(SamplesRunner.class);
         
-    static final String artifactsPath = new File("artifacts").getAbsolutePath();
+    static final String artifactsPath = new File("target/runtime/artifacts").getAbsolutePath();
      
     static String artifactPath(String name) {
         return artifactsPath+"/"+name;
@@ -30,7 +30,7 @@ public class SamplesRunner
     private static final String sampleDataMacroName = "samples";
     
     //private static final String sampleDataMacroValue = "C:/data/samples";
-    private static final String sampleDataMacroValue = new File("data").getAbsolutePath();
+    private static final String sampleDataMacroValue = new File("target/runtime/data").getAbsolutePath();
               
     private static TaskBuilder taskBuilder;
     
@@ -54,13 +54,11 @@ public class SamplesRunner
     
     public static void main(String[] args) throws Exception
     {
-        List<ConnectionUser> samples = new ArrayList<ConnectionUser>();
-        samples.add(new DeploymentSample());        
+        List<ConnectionUser> samples = new ArrayList<ConnectionUser>();     
         samples.add(new SyncExecutionSample());
         samples.add(new AsyncExecutionSample());
         samples.add(new ThreadedAsyncExecutionSample());
         samples.add(new ExecutionListenerSample());
-        samples.add(new SchedulingSample());
         
         ConnectionBuilder cxnBuilder = new ConnectionBuilder();        
         for (ConnectionUser sample : samples) {
@@ -73,7 +71,7 @@ public class SamplesRunner
                 if (!ok) {
                     break;
                 }
-            }            
+            }
         }
     }
 }

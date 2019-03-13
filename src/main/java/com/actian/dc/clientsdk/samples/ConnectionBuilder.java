@@ -1,6 +1,13 @@
-package com.actian.dc.clientsdk;
+package com.actian.dc.clientsdk.samples;
 
-import com.pervasive.di.client.sdk.*;
+//import com.pervasive.di.client.sdk.*;
+import com.pervasive.di.client.sdk.ConnectionFactory;
+import com.pervasive.di.client.sdk.ConnectionType;
+import com.pervasive.di.client.sdk.DeploymentConnection;
+import com.pervasive.di.client.sdk.ExecutionConnection;
+import com.pervasive.di.client.sdk.SDKException;
+import com.pervasive.di.client.sdk.SchedulingConnection;
+import com.pervasive.cosmos.Config;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -12,21 +19,15 @@ public class ConnectionBuilder
 
     // Local or remote execution?
 
-    private static final ConnectionType connectionType = ConnectionType.REMOTE;
+    private static final ConnectionType connectionType = ConnectionType.LOCAL;
     //private static final ConnectionType connectionType = ConnectionType.LOCAL;
-
-    // Configuration for remote execution
-
-    private static final String server = "http://localhost";
-    private static final String username = "super";
-    private static final String password = "super";
 
     // Configuration for local execution
 
-    private static final String installPath = "C:/Actian/di-standalone-engine-64bit-10.2.7-38/runtime/di9";
-	//private static final String installPath = "/opt/Actian/di-standalone-engine-10.2.7-38/runtime/di9";
+    private static final String installPath = Config.getInstance().getProperty("InstallPath");
+    private static final String iniFilePath = Config.getInstance().getIniFile().getAbsolutePath();
     private static final String listenerPort = "4443";
-    private static final String workingDir = "work";
+    private static final String workingDir = "target/work";
     private static final String packageLocation = SamplesRunner.artifactsPath;
 
     private final ConnectionFactory factory;
@@ -79,21 +80,17 @@ public class ConnectionBuilder
     }
 
     private static Properties getConfiguration() {
+        if (connectionType != ConnectionType.LOCAL)
+            throw new IllegalStateException(
+                    "ConnectionFactory can't be created with non-local connection type.");
         Properties props = new Properties();
         props.put(ConnectionFactory.CONNECTIONTYPE, connectionType.toString());
-        switch (connectionType) {
-        case LOCAL:
-            props.put(ConnectionFactory.LOCAL_ENGINE_INSTALL_PATH, installPath);
-            props.put(ConnectionFactory.LOCAL_ENGINE_LISTENER_PORT, listenerPort);
-            props.put(ConnectionFactory.LOCAL_WORK_DIRECTORY, workingDir());
-            props.put(ConnectionFactory.PACKAGELOCATION, packageLocation);
-            break;
-        case REMOTE:
-            props.put(ConnectionFactory.SERVER, server);
-            props.put(ConnectionFactory.USERNAME, username);
-            props.put(ConnectionFactory.PASSWORD, password);
-            break;
-        }
+        props.put(ConnectionFactory.LOCAL_ENGINE_INSTALL_PATH, installPath);
+        props.put(ConnectionFactory.INI_FILE_PATH,iniFilePath);
+        props.put(ConnectionFactory.LOCAL_ENGINE_LISTENER_PORT, listenerPort);
+        props.put(ConnectionFactory.LOCAL_WORK_DIRECTORY, workingDir());
+        props.put(ConnectionFactory.PACKAGELOCATION, packageLocation);
+
         return props;
     }
 
