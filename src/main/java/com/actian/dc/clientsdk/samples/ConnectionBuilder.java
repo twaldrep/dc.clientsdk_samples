@@ -1,26 +1,24 @@
 package com.actian.dc.clientsdk.samples;
 
-//import com.pervasive.di.client.sdk.*;
 import com.pervasive.di.client.sdk.ConnectionFactory;
 import com.pervasive.di.client.sdk.ConnectionType;
-import com.pervasive.di.client.sdk.DeploymentConnection;
 import com.pervasive.di.client.sdk.ExecutionConnection;
 import com.pervasive.di.client.sdk.SDKException;
-import com.pervasive.di.client.sdk.SchedulingConnection;
 import com.pervasive.cosmos.Config;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * Convenience class used to wrap boilerplate code involved with the building of
+ * an ExecutionConnection object.
+ */
 public class ConnectionBuilder
 {
     private static final Logger logger = LogUtil.getLogger(ConnectionBuilder.class);
 
-    // Local or remote execution?
-
     private static final ConnectionType connectionType = ConnectionType.LOCAL;
-    //private static final ConnectionType connectionType = ConnectionType.LOCAL;
 
     // Configuration for local execution
 
@@ -40,24 +38,19 @@ public class ConnectionBuilder
         return ConnectionBuilder.connectionType == ConnectionType.LOCAL;
     }
 
+    /**
+     * Build and return a local ExecutionConnection instance
+     * @return com.pervasive.di.client.sdk.ExecutionConnection  instance
+     * @throws SDKException if an unexpected error occurs
+     */
     public ExecutionConnection createExecutionConnection() throws SDKException {
         logger.info("Creating ExecutionConnection");
         if (isLocal()) {
             return factory.createLocalConnection();
         }
         else {
-            return factory.createExecutionConnection();
+            throw new IllegalStateException("Remote connections are not supported");
         }
-    }
-
-    public DeploymentConnection createDeploymentConnection() throws SDKException {
-        logger.info("Creating DeploymentConnection");
-        return factory.createDeploymentConnection();
-    }
-
-    public SchedulingConnection createSchedulingConnection() throws SDKException {
-        logger.info("Creating SchedulingConnection");
-        return factory.createSchedulingConnection();
     }
 
     private static ConnectionFactory createFactory() {

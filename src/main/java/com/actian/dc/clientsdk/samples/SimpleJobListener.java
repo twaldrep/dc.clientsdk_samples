@@ -4,6 +4,10 @@ import com.pervasive.di.client.sdk.JobListener;
 import com.pervasive.di.client.sdk.JobProgress;
 import java.util.logging.Logger;
 
+/**
+ * Simple com.pervasive.di.client.sdk.JobListener instance which logs job progress
+ * events.
+ */
 public class SimpleJobListener implements JobListener
 {
     protected final Logger logger;
@@ -14,6 +18,10 @@ public class SimpleJobListener implements JobListener
         this.logger=logger;
     }
 
+    /**
+     * Primary callback method for job progress events.
+     * @param progress com.pervasive.di.client.sdk.JobProgress instance
+     */
     @Override
     public synchronized void jobProgress(JobProgress progress)
     {

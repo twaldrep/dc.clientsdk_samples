@@ -7,6 +7,11 @@ import java.io.File;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Convenience class that encapsulates boilerplate logic to build a task from a provided
+ * runtime configuration
+ * @author twaldrep
+ */
 public class TaskBuilder 
 {
     private static final Logger logger = LogUtil.getLogger(TaskBuilder.class);
@@ -20,11 +25,22 @@ public class TaskBuilder
         this.packageVersion = pkgVersion;
         this.localMacros = localMacros;
     }
-        
+    
+    /**
+     * Build a default task using the existing package name, version and local macros
+     * @return com.pervasive.di.client.sdk.Task instance
+     * @throws SDKException if an error occurs while building the Task
+     */
     public Task buildTask() throws SDKException {
         return buildTask(null);
     }
-    
+
+    /**
+     * Build a task using the existing package name, version, provided runtime 
+     * configuration and local macros.
+     * @return com.pervasive.di.client.sdk.Task instance
+     * @throws SDKException if an error occurs while building the Task
+     */
     public Task buildTask(File rtcFile) throws SDKException {
         logger.info("Creating task for '"+packageName+"' Version '"+packageVersion+"'");
         Task task = new Task(packageName, packageVersion);

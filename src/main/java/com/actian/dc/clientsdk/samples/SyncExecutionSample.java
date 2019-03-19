@@ -16,15 +16,18 @@ import java.util.List;
  */
 public class SyncExecutionSample extends ExecutionConnectionUser
 {
+    /**
+     * @see com.actian.dc.clientsdk.samples.ExecutionConnectionUser#useConnection(com.pervasive.di.client.sdk.ExecutionConnection) 
+     */
     @Override
     public boolean useConnection(ExecutionConnection cxn) throws SDKException 
     {
         // Create tasks to execute sychronously
         List<Task> tasks = new ArrayList<Task>(3);        
         // Add task for sample map, using a runtime configuration      
-        tasks.add(SamplesRunner.sampleTask("map"));
+        tasks.add(SamplesRunner.sampleTask("Samples.map.rtc"));
         // Add task for sample process, using a runtime configuration
-        tasks.add(SamplesRunner.sampleTask("process"));
+        tasks.add(SamplesRunner.sampleTask("Samples.process.rtc"));
         // Add task for sample process, specifying entry point directly
         tasks.add(sampleTaskNoConfig()); 
         

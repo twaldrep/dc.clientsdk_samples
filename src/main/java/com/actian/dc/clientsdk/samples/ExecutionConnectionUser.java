@@ -7,20 +7,36 @@ import com.pervasive.di.client.sdk.SDKException;
 import java.util.logging.Logger;
 
 /**
- * Common base type for execution samples
+ * Common base type that all execution samples extend.
+ * Implements the base ConnectionUser interface.
  * Handles connection setup and cleanup
  */
 abstract class ExecutionConnectionUser implements ConnectionUser
 {
     protected Logger logger;
     
+    /**
+     * Returns true if the sample supports local execution.  The default value
+     * is true.
+     * @return true if local execution is supported, false otherwise.
+     */
     @Override
     public boolean supportsLocal() {
         return true;
     }
     
+    /**
+     * Called to create, and track completion of a job using the provided ExecutionConnection
+     * instance
+     * @param cxn instance of ExecutionConnection
+     * @return true if the job completed successfully, false otherwise
+     */
     abstract boolean useConnection(ExecutionConnection cxn) throws SDKException;
-        
+
+    /**
+     * 
+     * @see com.actian.dc.clientsdk.samples.ConnectionUser#useConnection(com.actian.dc.clientsdk.samples.ConnectionBuilder) 
+     */
     @Override
     public boolean useConnection(ConnectionBuilder cxnBuilder)
     {
@@ -44,6 +60,12 @@ abstract class ExecutionConnectionUser implements ConnectionUser
         }
     }
     
+    /**
+     * Called to log job results and return true if the job completed successfully
+     * @param job com.pervasive.di.client.sdk.Job instance representing the job that was executed
+     * @param cxn com.pervasive.di.client.sdk.ExecutionConnection instance through which the job was executed
+     * @return true if the job succeeded, false otherwise
+     */
     protected boolean reportResult(Job job, ExecutionConnection cxn) 
     {
         // Display any Error Message

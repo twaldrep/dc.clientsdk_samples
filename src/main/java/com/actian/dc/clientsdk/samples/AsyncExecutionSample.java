@@ -10,11 +10,18 @@ import com.pervasive.di.client.sdk.Task;
  */
 public class AsyncExecutionSample extends ExecutionConnectionUser
 {
+    /**
+     * Execute a job asynchronously and determine completion by polling a JobListener
+     * instance every 3 seconds for completion
+     * @param cxn ExecutionConnection instance 
+     * @return true if the job completed successfully, false otherwise
+     * @throws SDKException if an unexpected error occurs
+     */
     @Override
     public boolean useConnection(ExecutionConnection cxn) throws SDKException
     {
         // Create a new Task and feed it the RTC
-        Task task = SamplesRunner.sampleTask("map");
+        Task task = SamplesRunner.sampleTask("Samples.map.rtc");
 
         // Execute the task asynchronously.
         // The SimpleJobListener will set the finished boolean to true when the job is done.

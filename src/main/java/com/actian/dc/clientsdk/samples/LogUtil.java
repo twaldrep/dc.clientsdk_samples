@@ -2,6 +2,9 @@ package com.actian.dc.clientsdk.samples;
 
 import java.util.logging.*;
 
+/**
+ * Simple logging utility used by the Client SDK Samples project
+ */
 public class LogUtil 
 {
     static Logger getLogger(Class<?> clazz) {

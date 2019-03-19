@@ -14,11 +14,10 @@ import java.util.logging.Logger;
  */
 public class ExecutionListenerSample extends ExecutionConnectionUser
 {
-    @Override
-    public boolean supportsLocal() {
-        return true;
-    }
     
+    /**
+     * @see com.actian.dc.clientsdk.samples.ExecutionConnectionUser#useConnection(com.pervasive.di.client.sdk.ExecutionConnection) 
+     */
     @Override
     public boolean useConnection(ExecutionConnection cxn) throws SDKException
     {
@@ -38,7 +37,7 @@ public class ExecutionListenerSample extends ExecutionConnectionUser
                 // for this example we are submitting the same task repeatedly
                 // but you could also load a set of tasks to submit,
                 // or change the datasets or runtime configurations
-                Task task = SamplesRunner.sampleTask("process");
+                Task task = SamplesRunner.sampleTask("Samples.process.rtc");
                 Job job = cxn.submit(task, listener);
                 listener.addJob(job);
             }
@@ -84,8 +83,10 @@ public class ExecutionListenerSample extends ExecutionConnectionUser
             jobmap.put(job.getJobId(), job);
         }
         
-        // the listening thread
-        // this gets started before the jobs are added
+        /**
+         * The following method encapsulates the code which implements the listening thread.  
+         * This gets started before the jobs are added
+         */
         @Override
         public void run()
         {

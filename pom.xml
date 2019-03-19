@@ -14,6 +14,9 @@
             <url>http://raw.github.com/twaldrep/dc.maven/repository</url>
         </repository>
     </repositories>
+    <properties>
+        <sample.to.run></sample.to.run>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.pervasive.di.client.sdk</groupId>
@@ -80,6 +83,7 @@
                         <argument>-classpath</argument>
                         <classpath/>
                         <argument>com.actian.dc.clientsdk.samples.SamplesRunner</argument>
+                        <argument>${sample.to.run}</argument>
                     </arguments>
                 </configuration>
             </plugin>
