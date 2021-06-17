@@ -21,8 +21,6 @@ import com.pervasive.di.client.sdk.ExecutionConnection;
 import com.pervasive.di.client.sdk.Job;
 import com.pervasive.di.client.sdk.SDKException;
 import com.pervasive.di.client.sdk.Task;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Execute a v9 task synchronously.  
@@ -42,12 +40,16 @@ public class V9ExecutionSample extends ExecutionConnectionUser
     public boolean useConnection(ExecutionConnection cxn) throws SDKException 
     {
         
+        // Demonstrates that a runtime configuration can be created dynamically
+        // and used to populate a new Task instance.
         RuntimeConfig config = new RuntimeConfig();
         config.setName("Package With V9 Artifacts");
         config.setPackageName(PACKAGE_NAME);
         config.setPackageVersion(PACKAGE_VERSION);
         config.setEntryPoint(ENTRYPOINT);
         
+        // Deviates from other samples in that this one creates its own Task
+        // instance rather than calling a method exposed in the SamplesRunner.
         Task task = new Task();
         task.populate(config);
         task.addMacro(new NameValuePair(SamplesRunner.sampleDataMacroName, SamplesRunner.sampleDataMacroValue));
